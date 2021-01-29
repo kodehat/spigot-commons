@@ -21,6 +21,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.google.common.collect.Maps;
+
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -44,9 +46,16 @@ class MySqlDatabaseTest {
   }
 
   private static Stream<Arguments> buildArgs() {
+    // Order of key/value-pairs in map is important for the test only.
+    final Map<String, Object> first = new LinkedHashMap<>();
+    first.put("trueBool", true);
+    first.put("aString", "text");
+    final Map<String, Object> second = new LinkedHashMap<>();
+    second.put("falseBool", false);
+    second.put("anInt", 42);
     return Stream.of(
-        Arguments.of(Map.of("trueBool", true, "aString", "text"), "trueBool=true&aString=text"),
-        Arguments.of(Map.of("falseBool", false, "anInt", 42), "falseBool=false&anInt=42"));
+        Arguments.of(first, "trueBool=true&aString=text"),
+        Arguments.of(second, "falseBool=false&anInt=42"));
   }
 
   @ParameterizedTest

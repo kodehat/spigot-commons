@@ -1,4 +1,5 @@
 # spigot-commons
+![maven.yml](https://github.com/kodehat/spigot-commons/workflows/Java%20CI/badge.svg)
 
 > Library that holds common code for all of my Spigot plugins.
 
