@@ -21,7 +21,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.google.common.collect.Maps;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Stream;

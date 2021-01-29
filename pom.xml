@@ -5,7 +5,7 @@
 
   <groupId>de.codehat</groupId>
   <artifactId>spigot-commons</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>spigot-commons</name>
   <description>Library that holds common code for all of my Spigot plugins.</description>
 
@@ -251,5 +251,13 @@
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
   </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/kodehat/spigot-commons</url>
+    </repository>
+  </distributionManagement>
 
 </project>
