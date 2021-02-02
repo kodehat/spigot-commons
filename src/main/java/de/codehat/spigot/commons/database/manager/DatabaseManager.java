@@ -29,6 +29,16 @@ public final class DatabaseManager implements IDatabaseManager {
   }
 
   @Override
+  public IDatabase addDatabase(String databaseType, IDatabase database) {
+    return databases.put(databaseType, database);
+  }
+
+  @Override
+  public IDatabase removeDatabase(String databaseType) {
+    return databases.remove(databaseType);
+  }
+
+  @Override
   public IDatabase getDatabase(String databaseType) {
     return databases.get(databaseType);
   }

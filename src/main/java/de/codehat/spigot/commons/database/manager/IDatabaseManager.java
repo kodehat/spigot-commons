@@ -20,5 +20,9 @@ package de.codehat.spigot.commons.database.manager;
 import de.codehat.spigot.commons.database.IDatabase;
 
 public interface IDatabaseManager {
+  IDatabase addDatabase(String databaseType, IDatabase database);
+
+  IDatabase removeDatabase(String databaseType);
+
   IDatabase getDatabase(String databaseType);
 }

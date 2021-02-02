@@ -15,30 +15,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package de.codehat.spigot.commons.database;
+package de.codehat.spigot.commons.config;
 
-import java.nio.file.Path;
+import de.codehat.spigot.commons.config.key.ConfigKey;
+import java.io.IOException;
 
-public class SqliteDatabase extends AbstractDatabase {
+public interface IConfig {
+  <V> V get(ConfigKey<V> configKey);
 
-  public static final String TYPE = "sqlite";
+  <V> void set(ConfigKey<V> configKey, V value);
 
-  private static final String JDBC_URL_TEMPLATE = "jdbc:sqlite:%s";
-  private static final String DRIVER_CLASS_NAME = "org.sqlite.JDBC";
+  void save() throws IOException;
 
-  private final Path databasePath;
-
-  public SqliteDatabase(Path databasePath) {
-    this.databasePath = databasePath;
-  }
-
-  @Override
-  protected String getDriverClassName() {
-    return DRIVER_CLASS_NAME;
-  }
-
-  @Override
-  protected String getJdbcUrl() {
-    return String.format(JDBC_URL_TEMPLATE, databasePath);
-  }
+  void reload();
 }

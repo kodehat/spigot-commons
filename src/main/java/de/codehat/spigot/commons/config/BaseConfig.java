@@ -17,44 +17,51 @@
  */
 package de.codehat.spigot.commons.config;
 
-import de.codehat.spigot.commons.config.key.BaseConfigKey;
-import org.bukkit.configuration.file.FileConfiguration;
+import de.codehat.spigot.commons.config.key.ConfigKey;
+import java.nio.file.Path;
 
-public class BaseConfig extends Config {
+public class BaseConfig extends AbstractConfig {
 
-  public BaseConfig(FileConfiguration fileConfiguration) {
-    super(fileConfiguration);
+  private static final ConfigKey<String> DATABASE_TYPE = new ConfigKey<>("database.type", "sqlite");
+
+  private static final ConfigKey<String> DATABASE_HOST =
+      new ConfigKey<>("database.host", "127.0.0.1");
+
+  private static final ConfigKey<Integer> DATABASE_PORT = new ConfigKey<>("database.port", 3306);
+
+  private static final ConfigKey<String> DATABASE_NAME =
+      new ConfigKey<>("database.name", "signcolors");
+
+  private static final ConfigKey<String> DATABASE_USER = new ConfigKey<>("database.user", "steve");
+
+  private static final ConfigKey<String> DATABASE_PASSWORD =
+      new ConfigKey<>("database.name", "JustAnExamplePassword");
+
+  protected BaseConfig(Path filePath) {
+    super(filePath);
   }
 
   public String getDatabaseType() {
-    return getValue(BaseConfigKey.DATABASE_TYPE);
+    return get(DATABASE_TYPE);
   }
 
   public String getDatabaseHost() {
-    return getValue(BaseConfigKey.DATABASE_HOST);
+    return get(DATABASE_HOST);
   }
 
   public Integer getDatabasePort() {
-    return getValue(BaseConfigKey.DATABASE_PORT);
+    return get(DATABASE_PORT);
   }
 
   public String getDatabaseName() {
-    return getValue(BaseConfigKey.DATABASE_NAME);
+    return get(DATABASE_NAME);
   }
 
   public String getDatabaseUser() {
-    return getValue(BaseConfigKey.DATABASE_USER);
+    return get(DATABASE_USER);
   }
 
   public String getDatabasePassword() {
-    return getValue(BaseConfigKey.DATABASE_PASSWORD);
-  }
-
-  public boolean isSqlite() {
-    return "sqlite".equals(getDatabaseType());
-  }
-
-  public boolean isMysql() {
-    return "mysql".equals(getDatabaseType());
+    return get(DATABASE_PASSWORD);
   }
 }

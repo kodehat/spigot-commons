@@ -25,6 +25,8 @@ import javax.annotation.Nonnull;
 
 public class MysqlDatabase extends AbstractDatabase {
 
+  public static final String TYPE = "mysql";
+
   private static final String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
   private static final String JDBC_URL_TEMPLATE = "jdbc:mysql://%s:%s/%s?user=%s&password=%s&%s";
   private static final Map<String, Object> DEFAULT_ARGS;

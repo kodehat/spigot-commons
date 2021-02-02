@@ -15,30 +15,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package de.codehat.spigot.commons.database;
+package de.codehat.spigot.commons.database.migration;
 
-import java.nio.file.Path;
+import javax.annotation.Nonnull;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-public class SqliteDatabase extends AbstractDatabase {
+public final class CreateMigrationInfoTableMigration extends AbstractMigration {
 
-  public static final String TYPE = "sqlite";
+  public CreateMigrationInfoTableMigration(JdbcTemplate jdbcTemplate) {
+    super(jdbcTemplate);
+  }
 
-  private static final String JDBC_URL_TEMPLATE = "jdbc:sqlite:%s";
-  private static final String DRIVER_CLASS_NAME = "org.sqlite.JDBC";
-
-  private final Path databasePath;
-
-  public SqliteDatabase(Path databasePath) {
-    this.databasePath = databasePath;
+  @Nonnull
+  @Override
+  public String getSql() {
+    return "CREATE TABLE migration_info("
+        + "name VARCHAR(255) NOT NULL,"
+        + "version INTEGER PRIMARY KEY /*!40101 AUTO_INCREMENT */,"
+        + "applied_at INTEGER NOT NULL"
+        + ")";
   }
 
   @Override
-  protected String getDriverClassName() {
-    return DRIVER_CLASS_NAME;
+  public long getVersion() {
+    return 1;
   }
 
   @Override
-  protected String getJdbcUrl() {
-    return String.format(JDBC_URL_TEMPLATE, databasePath);
+  public String getName() {
+    return "create_migrationinfo_table";
   }
 }

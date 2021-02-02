@@ -18,6 +18,7 @@
 package de.codehat.spigot.commons.config.key;
 
 import java.util.List;
+import java.util.function.Supplier;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 /**
@@ -30,18 +31,26 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 public final class ConfigKey<V> {
 
   private final String key;
-  private final V defaultValue;
+  private final Supplier<V> defaultValue;
 
-  ConfigKey(String key, V defaultValue) {
+  public ConfigKey(String key, Supplier<V> defaultValue) {
     this.key = key;
     this.defaultValue = defaultValue;
+  }
+
+  public ConfigKey(String key, V defaultValue) {
+    this(key, () -> defaultValue);
   }
 
   public String getKey() {
     return key;
   }
 
-  public V getDefaultValue() {
+  public Supplier<V> getDefaultValueSupplier() {
     return defaultValue;
+  }
+
+  public V getDefaultValue() {
+    return defaultValue.get();
   }
 }

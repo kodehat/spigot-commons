@@ -18,18 +18,51 @@
 package de.codehat.spigot.commons.config;
 
 import de.codehat.spigot.commons.config.key.ConfigKey;
+import java.io.IOException;
+import java.nio.file.Path;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
-public class Config {
+public abstract class AbstractConfig implements IConfig {
 
-  private final FileConfiguration fileConfiguration;
+  private final Path filePath;
+  private FileConfiguration fileConfiguration;
 
-  public Config(FileConfiguration fileConfiguration) {
-    this.fileConfiguration = fileConfiguration;
+  protected AbstractConfig(Path filePath) {
+    this.filePath = filePath;
+
+    reload();
   }
 
+  @Override
   @SuppressWarnings("unchecked")
-  protected <V> V getValue(ConfigKey<V> configKey) {
+  public <V> V get(ConfigKey<V> configKey) {
     return (V) fileConfiguration.get(configKey.getKey(), configKey.getDefaultValue());
+  }
+
+  public <V> void set(ConfigKey<V> configKey) {
+    set(configKey, configKey.getDefaultValue());
+  }
+
+  @Override
+  public <V> void set(ConfigKey<V> configKey, V value) {
+    fileConfiguration.set(configKey.getKey(), value);
+  }
+
+  @Override
+  public void save() throws IOException {
+    fileConfiguration.save(filePath.toFile());
+  }
+
+  public void reload() {
+    fileConfiguration = YamlConfiguration.loadConfiguration(filePath.toFile());
+  }
+
+  protected FileConfiguration getFileConfiguration() {
+    return fileConfiguration;
+  }
+
+  protected Path getFilePath() {
+    return filePath;
   }
 }

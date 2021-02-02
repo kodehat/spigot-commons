@@ -15,30 +15,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package de.codehat.spigot.commons.database;
+package de.codehat.spigot.commons.database.migration;
 
-import java.nio.file.Path;
+import de.codehat.spigot.commons.database.model.MigrationInfo;
+import javax.annotation.Nullable;
 
-public class SqliteDatabase extends AbstractDatabase {
+public interface IMigration {
+  long getVersion();
 
-  public static final String TYPE = "sqlite";
+  String getName();
 
-  private static final String JDBC_URL_TEMPLATE = "jdbc:sqlite:%s";
-  private static final String DRIVER_CLASS_NAME = "org.sqlite.JDBC";
-
-  private final Path databasePath;
-
-  public SqliteDatabase(Path databasePath) {
-    this.databasePath = databasePath;
-  }
-
-  @Override
-  protected String getDriverClassName() {
-    return DRIVER_CLASS_NAME;
-  }
-
-  @Override
-  protected String getJdbcUrl() {
-    return String.format(JDBC_URL_TEMPLATE, databasePath);
-  }
+  /**
+   * Applies the underlying migration SQL to the database and returns the migration info as the
+   * result.
+   *
+   * <p>Returns {@code null} if applying the migration was not successful.
+   *
+   * @return the migration info on success or {@code null} on failure
+   */
+  @Nullable
+  MigrationInfo migrate();
 }

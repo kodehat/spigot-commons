@@ -15,16 +15,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package de.codehat.spigot.commons.config.key;
+package de.codehat.spigot.commons.logging;
 
-public final class BaseConfigKey {
-  public static final ConfigKey<String> DATABASE_TYPE = new ConfigKey<>("database.type", "sqlite");
-  public static final ConfigKey<String> DATABASE_HOST =
-      new ConfigKey<>("database.host", "127.0.0.1");
-  public static final ConfigKey<Integer> DATABASE_PORT = new ConfigKey<>("database.port", 3306);
-  public static final ConfigKey<String> DATABASE_NAME =
-      new ConfigKey<>("database.name", "signcolors");
-  public static final ConfigKey<String> DATABASE_USER = new ConfigKey<>("database.user", "steve");
-  public static final ConfigKey<String> DATABASE_PASSWORD =
-      new ConfigKey<>("database.name", "JustAnExamplePassword");
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public final class SimpleLogger {
+
+  private final Logger logger;
+
+  public SimpleLogger(Logger logger) {
+    this.logger = logger;
+  }
+
+  public void info(String msg, Object... params) {
+    logger.log(Level.INFO, msg, params);
+  }
+
+  public void warn(String msg, Object... params) {
+    logger.log(Level.WARNING, msg, params);
+  }
+
+  public void error(String msg, Throwable thrown) {
+    logger.log(Level.SEVERE, msg, thrown);
+  }
 }
