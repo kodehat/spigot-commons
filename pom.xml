@@ -21,9 +21,9 @@
     <java.version>17</java.version>
 
     <!-- Production dependency versions -->
+    <jdbi3.version>3.28.0</jdbi3.version>
     <jsr305.version>3.0.2</jsr305.version>
     <spigot.version>1.18.2-R0.1-SNAPSHOT</spigot.version>
-    <spring-jdbc.version>5.3.17</spring-jdbc.version>
     <mysql.connector.version>8.0.28</mysql.connector.version>
     <sqlite-jdbc.version>3.36.0.3</sqlite-jdbc.version>
 
@@ -43,6 +43,18 @@
     <skipTests>false</skipTests>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jdbi</groupId>
+        <artifactId>jdbi3-bom</artifactId>
+        <type>pom</type>
+        <version>${jdbi3.version}</version>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
     <!-- Production dependencies -->
     <dependency>
@@ -57,9 +69,16 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jdbc</artifactId>
-      <version>${spring-jdbc.version}</version>
+      <groupId>org.jdbi</groupId>
+      <artifactId>jdbi3-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jdbi</groupId>
+      <artifactId>jdbi3-sqlobject</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jdbi</groupId>
+      <artifactId>jdbi3-sqlite</artifactId>
     </dependency>
     <dependency>
       <groupId>org.xerial</groupId>
